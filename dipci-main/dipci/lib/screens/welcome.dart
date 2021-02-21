@@ -122,7 +122,9 @@ class WelcomePages extends StatelessWidget {
                 margin: EdgeInsets.all(50.0),
                 height: 280,
                 width: 280,
-                child: SvgPicture.asset(image),
+                child: SvgPicture.asset(image, placeholderBuilder: (context) {
+                  return Center(child: CircularProgressIndicator());
+                }),
               ),
             ),
             Expanded(
