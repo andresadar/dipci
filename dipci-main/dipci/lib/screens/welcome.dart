@@ -2,6 +2,7 @@ import 'package:dipci/colors/color.dart';
 import 'package:dipci/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../images/images.dart';
@@ -39,37 +40,41 @@ class _WelcomePageState extends State<WelcomePage> {
             WelcomePages(
               color: Colors.white,
               image: imagenes.pig,
-              text: 'Hola esto es una prueba, hola esto es una prueba',
-              textColor: Colors.black,
-              textSize: 20.0,
-              controller: _controller,
-              function: () {
-                _controller.nextPage(
-                    duration: Duration(milliseconds: 1000),
-                    curve: Curves.decelerate);
-              },
-            ),
-            WelcomePages(
-              color: Colors.white,
-              image: imagenes.bear,
-              text: 'Hola esto es una prueba 2, esto es una prueba 2 2 2',
-              textColor: Colors.black,
-              textSize: 20.0,
-              controller: _controller,
-              function: () {
-                _controller.nextPage(
-                    duration: Duration(milliseconds: 1000),
-                    curve: Curves.decelerate);
-              },
-            ),
-            WelcomePages(
-              color: Colors.white,
-              image: imagenes.creditTarget,
-              text: 'Bienvenido',
+              text: 'dipci',
               textColor: colorPrincipal,
               textSize: 45.0,
               controller: _controller,
               function: () {
+                _controller.nextPage(
+                    duration: Duration(milliseconds: 1000),
+                    curve: Curves.decelerate);
+              },
+            ),
+            WelcomePages(
+              color: Colors.white,
+              image: imagenes.personalFinance,
+              text: 'En esta aplicación reconoceras y jugaras con el dinero Colombiano',
+              textColor: colorPrincipal,
+              textSize: 28.0,
+              controller: _controller,
+              function: () {
+                _controller.nextPage(
+                    duration: Duration(milliseconds: 1000),
+                    curve: Curves.decelerate);
+              },
+            ),
+            WelcomePages(
+              color: Colors.white,
+              image: imagenes.welcome,
+              text: 'Bienvenido',
+              textColor: colorPrincipal,
+              textSize: 45.0,
+              controller: _controller,
+              function: () async{
+
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('welcome', true);
+
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),
@@ -122,7 +127,9 @@ class WelcomePages extends StatelessWidget {
                 margin: EdgeInsets.all(50.0),
                 height: 280,
                 width: 280,
-                child: SvgPicture.asset(image),
+                child: SvgPicture.asset(image , placeholderBuilder: (context){
+                return Center (child: CircularProgressIndicator() ,);
+                },),
               ),
             ),
             Expanded(
